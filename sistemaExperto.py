@@ -3,27 +3,27 @@ from models import RecoPictogramas, RecoFiguras, RecoLuces, Recomendacion
 
 def recomendacionSE(discapacidad, edadCron, edadDesa):
 
-    recomendacion = Recomendacion()
+    
     mi_diccionario = {"recPic":0,"recFig":0,"recLuc":0}
 
 
     clp = Environment()
+    clp.reset()
+
     clp.load('sis_est.clp')
+
 
   
 
     clp.eval("(assert (discapacidad "+str(discapacidad)+"))")
     clp.eval("(assert (edadCron "+str(edadCron)+"))")
     clp.eval("(assert (edadDesa "+str(edadDesa)+"))")
-    clp.run()
 
-    clp.eval("(assert (discapacidad "+str(0)+"))")
-    clp.eval("(assert (edadCron "+str(1)+"))")
-    clp.eval("(assert (edadDesa "+str(1)+"))")
 
 
     clp.run()
-
+    
+  
 
 
     evaluar1 = "(find-all-facts ((?x recommendationPictogramas )) TRUE)"
@@ -46,7 +46,7 @@ def recomendacionSE(discapacidad, edadCron, edadDesa):
         
         recPic = RecoPictogramas(Figuras, SigFase, Frases, Secuencias)
       
-        recLuc = RecoLuces(0,0,0,0,0,0,0,0)
+        # recLuc = RecoLuces(0,0,0,0,0,0,0,0)
         mi_diccionario["recPic"] = recPic.__dict__
 
     if(len(value2)>0):
@@ -79,7 +79,10 @@ def recomendacionSE(discapacidad, edadCron, edadDesa):
         
         recLuc = RecoLuces(jueLib,reaCam,recCol,relObj,secCol,lanDir,secDir,secAlt)
         mi_diccionario["recLuc"] = recLuc.__dict__
-     
+    
+    clp.reset()
+    
+    
     return mi_diccionario
 
 

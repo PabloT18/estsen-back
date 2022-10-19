@@ -1,3 +1,4 @@
+import re
 from fastapi import FastAPI
  
 import sistemaExperto as SE
@@ -16,10 +17,13 @@ def index():
 # async def recomendacion(datos: RecomendacionRequestModel):
 #     SE.recomendacionSE(datos.discapacidad,datos.edadCron,datos.edadDesa)
 #     return 'Sistema Experto'
+# discapacidad=0&edadCron=0&edadDesa=0
 
 @app.get('/recomendacion/{discapacidad,edadCron,edadDesa}')
 async def recomendacion(discapacidad,edadCron,edadDesa):
-   
+    print(discapacidad)
+    print(edadCron)
+    print(edadDesa)
     response = SE.recomendacionSE(discapacidad,edadCron,edadDesa)
-   
-    return response
+    
+    return response 
